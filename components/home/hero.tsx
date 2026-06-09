@@ -7,14 +7,14 @@ export function Hero() {
     <section className="relative flex min-h-screen items-end overflow-hidden">
       <div
         className="absolute inset-0 scale-105 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/hero.png')" }}
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1626383137804-ff908d2753a2?q=80&w=2670&auto=format&fit=crop')" }}
         aria-hidden="true"
       />
       <div
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(to right, rgba(13,12,10,0.92) 0%, rgba(13,12,10,0.74) 52%, rgba(13,12,10,0.4) 100%)',
+            'linear-gradient(to right, rgba(13,12,10,0.78) 0%, rgba(13,12,10,0.55) 52%, rgba(13,12,10,0.25) 100%)',
         }}
         aria-hidden="true"
       />
