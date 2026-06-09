@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-heading: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, monospace;
+
+  /* SilverLink brand palette */
+  --color-ink: var(--ink);
+  --color-ink2: var(--ink2);
+  --color-charcoal: var(--charcoal);
+  --color-body: var(--body);
+  --color-muted-warm: var(--muted-warm);
+  --color-muted2: var(--muted2);
+  --color-ivory: var(--ivory);
+  --color-cream: var(--cream);
+  --color-warm: var(--warm);
+  --color-silver: var(--silver);
+  --color-silver2: var(--silver2);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0rem;
+
+  /* Raw brand colors */
+  --ink: #0d0c0a;
+  --ink2: #1a1815;
+  --charcoal: #2c2820;
+  --body: #3d3530;
+  --muted-warm: #8a7d6e;
+  --muted2: #6b5e55;
+  --ivory: #faf7f2;
+  --cream: #f5f0e8;
+  --warm: #ede5d8;
+  --silver: #b8bcc4;
+  --silver2: #9aa0aa;
+
+  /* Semantic tokens (light / ivory theme) */
+  --background: var(--ivory);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--ivory);
+  --secondary: var(--cream);
+  --secondary-foreground: var(--charcoal);
+  --muted: var(--cream);
+  --muted-foreground: var(--muted2);
+  --accent: var(--silver);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(139, 115, 100, 0.14);
+  --input: rgba(139, 115, 100, 0.2);
+  --ring: var(--silver2);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'kern' 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif;
+    color: var(--ink);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em];
+    color: var(--silver2);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  .eyebrow-center {
+    @apply justify-center;
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Marquee for logo carousel */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+}
