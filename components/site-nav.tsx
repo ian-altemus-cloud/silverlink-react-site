@@ -68,7 +68,7 @@ export function SiteNav() {
           ))}
         </div>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="/login"
             className="border px-6 py-2.5 text-[11px] font-medium uppercase tracking-[0.12em] transition-colors"
@@ -97,7 +97,7 @@ export function SiteNav() {
         <button
           type="button"
           onClick={() => setMenuOpen((o) => !o)}
-          className="flex h-10 w-10 items-center justify-center md:hidden"
+          className="flex h-10 w-10 items-center justify-center lg:hidden"
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
         >
@@ -132,7 +132,7 @@ export function SiteNav() {
       {/* Mobile menu */}
       {menuOpen && (
         <div
-          className="border-t md:hidden"
+          className="border-t lg:hidden"
           style={{
             background: 'var(--ivory)',
             borderColor: 'var(--border)',
