@@ -223,7 +223,7 @@ export function PricingTable() {
 
       <Reveal>
         <p className="mt-8 text-center text-xs leading-relaxed text-muted-foreground">
-          <strong>$297 one-time setup fee</strong> — covers full onboarding, AI
+          <strong>$297 one-time setup fee</strong>, covers full onboarding, AI
           voice configuration, integration, testing, and a 30-day check-in call.
           <br />
           Overage: $0.10 per message over monthly limit. No long-term contracts.

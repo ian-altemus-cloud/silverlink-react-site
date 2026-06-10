@@ -23,10 +23,7 @@ export function MetaBadge() {
       <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(250,247,242,0.45)]">
         Official Meta Tech Provider
       </span>
-      <span className="inline-block h-3.5 w-px bg-[rgba(255,255,255,0.12)]" />
-      <span className="text-[11px] tracking-[0.06em] text-[rgba(250,247,242,0.28)]">
-        Instagram Messaging API
-      </span>
+
     </div>
   )
 }

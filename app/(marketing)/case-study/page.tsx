@@ -73,7 +73,7 @@ export default function CaseStudyPage() {
             <Reveal delay={60}>
               <p className="mt-4 leading-relaxed text-body">
                 Running three salons, the intake process was leaking revenue.
-                Instagram DMs — pricing, availability, bookings — were being
+                Instagram DMs, pricing, availability, and bookings, were being
                 managed inconsistently by staff. If a query wasn&apos;t answered
                 in minutes, the client booked with a competitor.
               </p>

@@ -27,7 +27,7 @@ const FAQS = [
   },
   {
     q: 'What if I want to cancel?',
-    a: "No long-term contracts. Monthly billing, cancel any time. We're confident you'll see ROI in the first 30 days — but we don't lock you in to prove it.",
+    a: "No long-term contracts. Monthly billing, cancel any time. We're confident you'll see ROI in the first 30 days, but we don't lock you in to prove it.",
   },
   {
     q: 'Do I need to be technical to use SilverLink?',

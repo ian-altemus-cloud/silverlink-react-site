@@ -5,7 +5,7 @@ const ITEMS = [
   {
     icon: Mail,
     title: 'Direct email support',
-    text: 'info@silverlinkai.com — we respond same day',
+    text: 'info@silverlinkai.com, we respond same day',
   },
   {
     icon: Phone,
@@ -40,7 +40,7 @@ export function Support() {
                 Every client gets a dedicated onboarding call, a custom setup
                 built for their business, and direct access to our support team.
                 If something isn&apos;t working, you reach someone who knows the
-                system — not a ticket queue.
+                system, not a ticket queue.
               </p>
             </Reveal>
             <div className="mt-8 flex flex-col gap-7">

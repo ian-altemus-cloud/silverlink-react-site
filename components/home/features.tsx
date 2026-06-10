@@ -7,7 +7,7 @@ const FEATURES = [
   },
   {
     title: "Your Brand's Voice, Not Ours",
-    text: 'From luxury med spa to high-energy lash studio, the AI adopts your specific brand voice — like your best receptionist handling every message with perfect etiquette, 24/7.',
+    text: 'From luxury med spa to high-energy lash studio, the AI adopts your specific brand voice, like your best receptionist handling every message with perfect etiquette, 24/7.',
   },
   {
     title: 'No-Leak Booking Funnel',
@@ -23,7 +23,7 @@ const FEATURES = [
   },
   {
     title: 'Studio-Grade Security',
-    text: 'Your account and client data are protected with bank-level encryption. Professional, secure, and fully compliant — so you can focus on your craft.',
+    text: 'Your account and client data are protected with bank-level encryption. Professional, secure, and fully compliant, so you can focus on your craft.',
   },
 ]
 

@@ -20,11 +20,11 @@ const VALUES = [
   },
   {
     title: 'Invisible is the goal',
-    text: "The best technology disappears into the background. Your clients should feel like your business is attentive — not like they're talking to software.",
+    text: "The best technology disappears into the background. Your clients should feel like your business is attentive, not like they're talking to software.",
   },
   {
     title: 'Real results, not demos',
-    text: "We measure success in bookings converted and time saved — not in dashboards that look impressive but don't move the business forward.",
+    text: "We measure success in bookings converted and time saved, not in dashboards that look impressive but don't move the business forward.",
   },
 ]
 
@@ -59,7 +59,7 @@ export default function MissionPage() {
           </Reveal>
           <Reveal delay={120}>
             <p className="mt-4 leading-relaxed text-body">
-              We didn&apos;t build a prototype — we built a production-grade
+              We didn&apos;t build a prototype. We built a production-grade
               system deployed on enterprise-level AWS infrastructure. Powerful,
               reliable, and entirely plug-and-play.
             </p>
@@ -86,7 +86,7 @@ export default function MissionPage() {
               <p className="mt-5 leading-relaxed text-body">
                 Founded by cloud infrastructure engineer and business owner Ian
                 Altemus, SilverLink was built by someone who understands both
-                sides — the engineering required to build it right and the
+                sides: the engineering required to build it right and the
                 operational reality of running a service business.
               </p>
             </div>

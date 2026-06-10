@@ -16,7 +16,7 @@ export function SoftCloseSplit() {
           <p className="mt-6 max-w-md leading-relaxed text-muted-foreground">
             Most AI assistants just answer questions. SilverLink drives
             decisions. From the moment a client messages, the system begins a
-            progressive conversion flow — surfacing availability and building
+            progressive conversion flow, surfacing availability and building
             trust while the lead is still hot.
           </p>
         </Reveal>

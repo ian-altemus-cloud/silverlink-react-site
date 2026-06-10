@@ -19,7 +19,7 @@ const STEPS = [
   {
     n: '02',
     title: 'A client messages you',
-    text: 'Pricing, availability, anything — at any hour. SilverLink is always on.',
+    text: 'Pricing, availability, anything, at any hour. SilverLink is always on.',
   },
   {
     n: '03',
@@ -57,7 +57,7 @@ export default function HowItWorksPage() {
             </em>
           </>
         }
-        intro="SilverLink connects to your Instagram and handles every client conversation from first message to booked appointment — automatically."
+        intro="SilverLink connects to your Instagram and handles every client conversation from first message to booked appointment. Automatically."
       />
 
       <section className="py-24 md:py-32">
