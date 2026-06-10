@@ -162,7 +162,7 @@ export function AdminPanel() {
                 <button
                   onClick={handleActivate}
                   disabled={loading || !prompt.trim()}
-                  className="rounded-full bg-teal px-8 py-3 text-sm font-semibold text-white disabled:opacity-50"
+                  className="rounded-full bg-green-600 px-8 py-3 text-sm font-semibold text-white disabled:opacity-50"
                 >
                   {loading ? 'Activating...' : 'Approve and Activate'}
                 </button>
