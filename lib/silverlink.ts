@@ -210,3 +210,58 @@ export async function submitOnboarding(
     )
   }
 }
+
+// ─── Admin ───
+
+export interface TenantRecord {
+  instagram_account_id: string
+  username?: string
+  status?: string
+  business_name?: string
+  website?: string
+  business_type?: string
+  onboarding_tone?: string
+  emoji_usage?: string
+  booking_system?: string
+  booking_link?: string
+  cancellation_policy?: string
+  escalation_contact?: string
+  onboarding_complete?: boolean
+  system_prompt?: string
+}
+
+async function getAdminKey(): Promise<string> {
+  const response = await fetch('/api/admin-key')
+  if (!response.ok) throw new Error('Unable to authorize admin access.')
+  const data = await response.json()
+  return data.key as string
+}
+
+export async function fetchTenants(): Promise<TenantRecord[]> {
+  const key = await getAdminKey()
+  const resp = await fetch(`${API_BASE}/admin/tenants`, {
+    headers: { 'X-Admin-Key': key },
+  })
+  if (!resp.ok) throw new Error('Unable to load tenants.')
+  const data = await resp.json()
+  return data.tenants as TenantRecord[]
+}
+
+export async function activateTenant(
+  instagramAccountId: string,
+  systemPrompt: string,
+): Promise<void> {
+  const key = await getAdminKey()
+  const resp = await fetch(`${API_BASE}/admin/tenant/activate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Admin-Key': key },
+    body: JSON.stringify({
+      instagram_account_id: instagramAccountId,
+      system_prompt: systemPrompt,
+    }),
+  })
+  if (!resp.ok) {
+    const data = await resp.json().catch(() => ({}))
+    throw new Error(data.error || 'Activation failed.')
+  }
+}
