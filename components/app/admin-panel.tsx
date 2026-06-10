@@ -155,9 +155,18 @@ export function AdminPanel() {
               </div>
 
               {/* System prompt editor */}
-              <label className="mb-2 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                System Prompt
-              </label>
+              <div className="mb-4 flex items-center justify-between">
+                <label className="block text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  System Prompt
+                </label>
+                <button
+                  onClick={handleActivate}
+                  disabled={loading || !prompt.trim()}
+                  className="rounded-full bg-teal px-8 py-3 text-sm font-semibold text-white disabled:opacity-50"
+                >
+                  {loading ? 'Activating...' : 'Approve and Activate'}
+                </button>
+              </div>
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
@@ -176,13 +185,7 @@ export function AdminPanel() {
                 </p>
               )}
 
-              <button
-                onClick={handleActivate}
-                disabled={loading || !prompt.trim()}
-                className="rounded-full bg-teal px-8 py-3 text-sm font-semibold text-white disabled:opacity-50"
-              >
-                {loading ? 'Activating...' : 'Approve and Activate'}
-              </button>
+
             </>
           )}
         </div>
