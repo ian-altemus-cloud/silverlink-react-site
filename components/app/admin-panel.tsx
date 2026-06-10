@@ -58,6 +58,53 @@ export function AdminPanel() {
     }
   }
 
+  async function handleSavePrompt() {
+    if (!selected) return
+    setLoading(true)
+    setError(null)
+    setSuccess(null)
+    try {
+      await activateTenant(selected.instagram_account_id, prompt)
+      setSuccess('Prompt updated.')
+      const updated = await fetchTenants()
+      setTenants(updated)
+      setSelected(updated.find(t => t.instagram_account_id === selected.instagram_account_id) ?? null)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Save failed.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleDeactivate() {
+    if (!selected) return
+    if (!confirm(`Deactivate ${selected.username ?? selected.instagram_account_id}? Their AI will stop responding immediately.`)) return
+    setLoading(true)
+    setError(null)
+    setSuccess(null)
+    try {
+      const key = await fetch('/api/admin-key').then(r => r.json()).then(d => d.key)
+      const resp = await fetch(`${process.env.NEXT_PUBLIC_API_BASE ?? 'https://api.silverlinkai.com'}/admin/tenant/activate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Key': key },
+        body: JSON.stringify({
+          instagram_account_id: selected.instagram_account_id,
+          system_prompt: prompt,
+          status_override: 'suspended'
+        }),
+      })
+      if (!resp.ok) throw new Error('Deactivation failed.')
+      setSuccess(`${selected.username ?? selected.instagram_account_id} has been deactivated.`)
+      const updated = await fetchTenants()
+      setTenants(updated)
+      setSelected(updated.find(t => t.instagram_account_id === selected.instagram_account_id) ?? null)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Deactivation failed.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   if (!authed) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background px-6">
@@ -87,11 +134,14 @@ export function AdminPanel() {
     )
   }
 
+  const isPending = selected?.status === 'pending_review'
+  const isActive = selected?.status === 'active'
+  const isSuspended = selected?.status === 'suspended'
+
   return (
     <div className="min-h-screen bg-background p-8">
       <h1 className="mb-8 text-3xl font-semibold text-charcoal">Admin Panel</h1>
       <div className="grid grid-cols-3 gap-6">
-        {/* Tenant list */}
         <div className="col-span-1 border border-border bg-card">
           <div className="border-b border-border px-4 py-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             Tenants
@@ -101,29 +151,24 @@ export function AdminPanel() {
               key={t.instagram_account_id}
               onClick={() => selectTenant(t)}
               className={`w-full border-b border-border px-4 py-3 text-left transition-colors hover:bg-cream ${
-                selected?.instagram_account_id === t.instagram_account_id
-                  ? 'bg-cream'
-                  : ''
+                selected?.instagram_account_id === t.instagram_account_id ? 'bg-cream' : ''
               }`}
             >
               <p className="text-sm font-medium text-charcoal">
                 {t.username ?? t.instagram_account_id}
               </p>
               <p className="text-xs text-muted-foreground">{t.business_name ?? 'No name'}</p>
-              <span
-                className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
-                  t.status === 'active'
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-yellow-100 text-yellow-700'
-                }`}
-              >
+              <span className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
+                t.status === 'active' ? 'bg-green-100 text-green-700' :
+                t.status === 'suspended' ? 'bg-red-100 text-red-700' :
+                'bg-yellow-100 text-yellow-700'
+              }`}>
                 {t.status ?? 'unknown'}
               </span>
             </button>
           ))}
         </div>
 
-        {/* Tenant detail */}
         <div className="col-span-2 border border-border bg-card p-6">
           {!selected ? (
             <p className="text-sm text-muted-foreground">Select a tenant to review.</p>
@@ -133,7 +178,6 @@ export function AdminPanel() {
                 {selected.username ?? selected.instagram_account_id}
               </h2>
 
-              {/* Onboarding answers */}
               <div className="mb-6 grid grid-cols-2 gap-3 rounded border border-border bg-background p-4 text-sm">
                 {[
                   ['Business', selected.business_name],
@@ -154,25 +198,40 @@ export function AdminPanel() {
                 ))}
               </div>
 
-              {/* System prompt editor */}
               <div className="mb-4 flex items-center justify-between">
                 <label className="block text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                   System Prompt
                 </label>
-                <button
-                  onClick={handleActivate}
-                  disabled={loading || !prompt.trim()}
-                  className="rounded-full bg-green-600 px-8 py-3 text-sm font-semibold text-white disabled:opacity-50"
-                >
-                  {loading ? 'Activating...' : 'Approve and Activate'}
-                </button>
+                <div className="flex gap-3">
+                  {(isPending || isSuspended) && (
+                    <button
+                      onClick={handleActivate}
+                      disabled={loading || !prompt.trim()}
+                      className="rounded-full bg-green-600 px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                    >
+                      {loading ? 'Activating...' : 'Approve and Activate'}
+                    </button>
+                  )}
+                  {isActive && (
+                    <>
+                      <button
+                        onClick={handleDeactivate}
+                        disabled={loading}
+                        className="rounded-full border border-red-200 bg-red-50 px-6 py-2.5 text-sm font-semibold text-red-600 disabled:opacity-50"
+                      >
+                        Deactivate
+                      </button>
+                      <button
+                        onClick={handleSavePrompt}
+                        disabled={loading || !prompt.trim()}
+                        className="rounded-full bg-green-600 px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                      >
+                        {loading ? 'Saving...' : 'Save Prompt'}
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
-              <textarea
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                rows={16}
-                className="mb-4 w-full rounded border border-border bg-background px-4 py-3 font-mono text-sm text-charcoal outline-none focus:border-teal"
-              />
 
               {error && (
                 <p className="mb-3 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
@@ -185,7 +244,12 @@ export function AdminPanel() {
                 </p>
               )}
 
-
+              <textarea
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                rows={16}
+                className="w-full rounded border border-border bg-background px-4 py-3 font-mono text-sm text-charcoal outline-none focus:border-teal"
+              />
             </>
           )}
         </div>
